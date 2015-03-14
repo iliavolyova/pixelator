@@ -2,30 +2,25 @@ import pylast
 import time
 from xml.dom.minidom import parseString
 
-respath = '../../res/creds.txt'
-
 class Scrobbler(object):
 
-	credsFile = open(respath, 'r');
-	creds = {}
-	for line in credsFile:
-		k, v = line.strip().split('=')
-		creds[k.strip()] = v.strip()
-
-	API_KEY = creds['API_KEY']
-	API_SECRET = creds['API_SECRET']
-
-	username = creds['username']
-	password_hash = pylast.md5(creds['password'])
 	corrected_track = None
 	firstrun = False
 
 	def __init__(self, pix):
 		self.pix = pix
-		self.network = pylast.get_lastfm_network(api_key = self.API_KEY,
-												api_secret = self.API_SECRET, 
-												username = self.username, 
-												password_hash = self.password_hash)
+
+		API_KEY = pix.config.creds['API_KEY']
+		API_SECRET = pix.config.creds['API_SECRET']
+
+		username = pix.config.creds['username']
+		password_hash = pylast.md5(pix.config.creds['password'])
+
+
+		self.network = pylast.get_lastfm_network(api_key = API_KEY,
+												api_secret = API_SECRET,
+												username = username,
+												password_hash = password_hash)
 		self.scrobbler = self.network.get_scrobbler('tst', '1.0')
 
 	def callback_finished(self, sender, tracksearch, *callback_args):
@@ -84,7 +79,3 @@ class Scrobbler(object):
 		xmltitle = dom.getElementsByTagName('title')[0].toxml().replace('<title>', '').replace('</title>', '')
 		
 		return (xmlartist, xmltitle)
-
-if __name__ == '__main__':
-	s = Scrobbler()
-	print s.xmlartist, s.xmltitle

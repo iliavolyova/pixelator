@@ -11,6 +11,8 @@ from kivy.config import Config
 from kivy.uix.boxlayout import BoxLayout
 
 from functools import partial
+
+from magnet import Magnet
 from FileManager import FileManager
 from Scrobbler import Scrobbler
 
@@ -38,6 +40,7 @@ class Pixelator(BoxLayout):
 
 	def __init__(self, **kwargs):
 		super(BoxLayout, self).__init__(**kwargs)
+		self.config = pixconfig.Config()
 		self.fmanager = FileManager("../../gif")
 		self.scrobbler = Scrobbler(self)
 		
@@ -101,7 +104,7 @@ class Pixelator(BoxLayout):
 		self.img_right.source = self.fmanager.next_gif()
 
 	def check_song_server(self, dt):
-		req = urllib2.Request('http://192.168.1.35:8080')
+		req = urllib2.Request('http://' + self.config.creds['ip'] + ':' + self.config.creds['port'])
 		site = urllib2.urlopen(req)
 		s = site.readlines()
 		if s:
@@ -128,4 +131,10 @@ class PixelatorApp(App):
 		return pix
 
 if __name__ == '__main__':
+	if __package__ is None:
+		import sys
+		from os import path
+		sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
+		import pixconfig
+
 	PixelatorApp().run()
