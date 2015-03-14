@@ -1,3 +1,6 @@
+### WARNING: this code has been slightly modified to work with the latest last.fm API
+### ~iliavolyova
+
 # -*- coding: utf-8 -*-
 #
 # pylast - A Python interface to Last.fm (and other API compatible social networks)

@@ -1,8 +1,6 @@
 import pylast
 import time
-from datetime import datetime, timedelta
 from xml.dom.minidom import parseString
-from functools import partial
 
 respath = '../../res/creds.txt'
 
@@ -49,7 +47,7 @@ class Scrobbler(object):
 		album = self.corrected_track.get_album()
 		self._title = str(self.corrected_track.get_title())
 		self._artist = str(self.corrected_track.get_artist())
-		if not album.get_release_date() and len(album.get_release_date() < 2):
+		if not album.get_release_date() and len(album.get_release_date()) < 2:
 			self._album = str(album.get_title())
 		else: 
 			self._album = str(album.get_title() + ' [' + album.get_release_date().split(' ')[2].replace(',', '.') + ']')

@@ -8,16 +8,11 @@ from kivy.animation import Animation
 from kivy.core.window import Window
 from kivy.config import Config
 
-from kivy.uix.image import Image
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
-from kivy.uix.widget import Widget
 
 from functools import partial
-from random import randint
 from FileManager import FileManager
-from Scrobbler import Scrobbler	
-from magnet import Magnet 
+from Scrobbler import Scrobbler
 
 import socket
 import urllib2
@@ -129,8 +124,7 @@ class PixelatorApp(App):
 
 		pix = Pixelator()
 		Clock.schedule_interval(pix.update_right, 20)
-		Clock.schedule_interval(pix.check_song_server, 2) 
-		#Clock.schedule_interval(pix.update_now_playing, 1)
+		Clock.schedule_interval(pix.check_song_server, 2)
 		return pix
 
 if __name__ == '__main__':
