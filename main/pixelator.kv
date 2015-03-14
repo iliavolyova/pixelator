@@ -1,0 +1,88 @@
+#:kivy 1.8.0
+
+<SongLabel@Label>
+	canvas.before:
+		Color: 
+			rgba: [1,1,1,.5]
+		Rectangle:
+			size: (self.width + self.pos[0], self.height)
+			pos: (0, self.pos[1])
+	color: [0,0,0,1]
+	text_size: self.width, self.height
+	size_hint: 1, 0.1
+	halign: 'left'
+	valign: 'middle'
+	markup: True
+	bold: True
+
+<Pixelator>
+	img_left: img_l
+	img_right: img_r
+
+	label_title: lbl_title
+	label_artist: lbl_artist
+	label_album: lbl_album
+
+	magnet: mymagnet
+	master_pane: panel_master
+	left_pane: panel_left
+	magnet_box: boxy
+
+	canvas:
+		Rectangle:
+			source: '../../res/bg-stic-lastfm.png'
+			size: root.size
+
+	BoxLayout:
+		id: panel_master
+		orientation: 'horizontal'
+		size: root.width, root.height
+		padding: 80
+
+		BoxLayout:
+			id:panel_left
+			orientation: 'vertical'
+			size_hint: 0.45, 1
+			padding: [25, 20, 0, 5] #left, top, right, bottom
+			spacing: 5
+
+			SongLabel:
+				id: lbl_title
+				text_size: [self.width, self.height]
+
+			SongLabel:
+				id: lbl_artist
+				text_size: [self.width, self.height]
+
+			SongLabel:
+				id: lbl_album
+				text_size: [self.width, self.height]
+
+			AsyncImage:
+				id: img_l
+				color: [0,0,0,0]
+				padding: [50,0,0,0]
+				allow_stretch: True
+				source: None
+				size_hint: 1,0.7
+
+		Magnet:
+			id: mymagnet
+			transitions: {'pos': 'out_quad', 'size': 'out_elastic'}
+        	duration: 3
+			size_hint: 0.55,1
+
+			BoxLayout:
+				id: boxy
+
+#				Video:
+#					id: img_r
+#					source: None
+#					allow_stretch: True
+#					volume: 0
+				
+				Image:
+					id: img_r
+					allow_stretch: True
+					anim_delay: 0.11
+					source: None
